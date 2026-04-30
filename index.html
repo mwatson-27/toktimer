@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Multi Countdown</title>
+  <title>toktimer</title>
   <style>
     body {
       margin: 0;
@@ -13,8 +13,13 @@
       align-items: center;
       background: #111;
       color: #fff;
+	  background-image: "tok.png";
       font-family: Arial, sans-serif;
     }
+
+	* {
+		background-color: rgba(15,15,15,0);
+	}
 
     #label {
       font-size: 2vw;
@@ -86,7 +91,7 @@
       const seconds = Math.floor((diff / 1000) % 60);
 
       countdownEl.innerHTML =
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        `${days}d${hours}h ${minutes}m ${seconds}s`;
     }
 
     setInterval(updateCountdown, 1000);
