@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi Countdown</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    #label {
+      font-size: 2vw;
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    #countdown {
+      font-size: 6vw;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="label"></div>
+  <div id="countdown"></div>
+
+  <script>
+    // ARRAY OF EVENTS (date + description)
+    const events = [
+      {
+        time: new Date("2026-05-01T13:10:00").getTime(),
+        label: "NEXT TOK PERIOD"
+      },
+      {
+        time: new Date("2026-05-01T14:10:00").getTime(),
+        label: "YOU ARE IN TOK"
+      },
+	  {
+        time: new Date("2026-05-04T07:30:00").getTime(),
+        label: "NEXT TOK PERIOD"
+      },
+      {
+        time: new Date("2026-05-04T08:30:00").getTime(),
+        label: "YOU ARE IN TOK"
+      },
+      
+    ];
+
+    let currentIndex = 0;
+
+    const countdownEl = document.getElementById("countdown");
+    const labelEl = document.getElementById("label");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+
+      // Skip past completed events
+      while (currentIndex < events.length && now >= events[currentIndex].time) {
+        currentIndex++;
+      }
+
+      // No more events
+      if (currentIndex >= events.length) {
+        labelEl.innerHTML = "";
+        countdownEl.innerHTML = "All events completed!";
+        return;
+      }
+
+      const currentEvent = events[currentIndex];
+      const diff = currentEvent.time - now;
+
+      // Update label
+      labelEl.innerHTML = currentEvent.label;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.innerHTML =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
