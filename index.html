@@ -130,12 +130,11 @@
     function updateCountdown() {
       const now = new Date().getTime();
 
-      // Skip past completed events
+   
       while (currentIndex < events.length && now >= events[currentIndex].time) {
         currentIndex++;
       }
 
-      // No more events
       if (currentIndex >= events.length) {
         labelEl.innerHTML = "";
         countdownEl.innerHTML = "All events completed!";
@@ -145,7 +144,7 @@
       const currentEvent = events[currentIndex];
       const diff = currentEvent.time - now;
 
-      // Update label
+  
       labelEl.innerHTML = currentEvent.label;
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
