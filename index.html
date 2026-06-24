@@ -41,6 +41,11 @@
   <div id="countdown"></div>
 
   <script>
+
+	
+
+
+	  
     // ARRAY OF EVENTS (date + description)
     const events = [
 
@@ -60,6 +65,76 @@
       
     ];
 
+
+	// TOK exclusions (holidays etc.)
+	const tokExcludedRanges = [
+	  {
+	    start: new Date("2026-06-26"),
+	    end: new Date("2026-07-22")
+	  }
+	];
+	
+	function isTokExcluded(date) {
+	  return tokExcludedRanges.some(range =>
+	    date >= range.start && date <= range.end
+	  );
+	}
+	
+	// Monday 22/06/2026 = Week B
+	const tokCycleStart = new Date("2026-06-22");
+	
+	// Generate TOK periods for the next 5 years
+	for (let i = 0; i < 365 * 5; i++) {
+	  const date = new Date(tokCycleStart);
+	  date.setDate(tokCycleStart.getDate() + i);
+	
+	  const weeksSinceStart = Math.floor(i / 7);
+	  const isWeekB = weeksSinceStart % 2 === 0;
+	
+	  const day = date.getDay();
+	
+	  const periods = [];
+	
+	  if (isWeekB) {
+	    // Thursday 10:55
+	    if (day === 4) {
+	      periods.push({ hour: 10, minute: 55 });
+	    }
+	
+	    // Friday 13:10
+	    if (day === 5) {
+	      periods.push({ hour: 13, minute: 10 });
+	    }
+	  } else {
+	    // Monday 07:30
+	    if (day === 1) {
+	      periods.push({ hour: 7, minute: 30 });
+	    }
+	
+	    // Friday 13:10
+	    if (day === 5) {
+	      periods.push({ hour: 13, minute: 10 });
+	    }
+	  }
+	
+	  for (const p of periods) {
+	    const periodDate = new Date(date);
+	    periodDate.setHours(p.hour, p.minute, 0, 0);
+	
+	    if (!isTokExcluded(periodDate)) {
+	      events.push({
+	        time: periodDate.getTime(),
+	        label: "NEXT TOK PERIOD"
+	      });
+	    }
+	  }
+	}
+	
+	// Sort all events chronologically
+	events.sort((a, b) => a.time - b.time);
+
+
+	  
     let currentIndex = 0;
 
     const countdownEl = document.getElementById("countdown");
