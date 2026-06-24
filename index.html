@@ -42,7 +42,7 @@
 
   <script>
 
-	
+	let TEST_TIME = null;
 
 
 	  
@@ -141,7 +141,7 @@
     const labelEl = document.getElementById("label");
 
     function updateCountdown() {
-      const now = new Date().getTime();
+      const now = TEST_TIME ?? Date.now();
 
    
       while (currentIndex < events.length && now >= events[currentIndex].time) {
