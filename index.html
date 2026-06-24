@@ -123,9 +123,14 @@
 	
 	    if (!isTokExcluded(periodDate)) {
 	      events.push({
-	        time: periodDate.getTime(),
-	        label: "NEXT TOK PERIOD"
-	      });
+			  time: periodDate.getTime(),
+			  label: "TOK PERIOD STARTS"
+			});
+		
+		   events.push({
+			  time: periodDate.getTime() + (60 * 60 * 1000),
+			  label: "TOK PERIOD ENDS"
+			});
 	    }
 	  }
 	}
